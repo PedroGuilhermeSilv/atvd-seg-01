@@ -1,6 +1,10 @@
+Aqui está a versão detalhada do README explicando o uso de `isalpha` e `ord` no contexto do código:
+
+---
+
 # Criptografia de Substituição no Módulo 26
 
-Este projeto implementa um algoritmo de criptografia de substituição baseado no módulo 26, permitindo encriptar e descriptar letras e textos completos. É especialmente útil para lidar com o alfabeto inglês (A-Z).
+Este projeto implementa um algoritmo de criptografia de substituição para textos baseados no módulo 26, ideal para trabalhar com o alfabeto inglês (A-Z).
 
 ---
 
@@ -10,38 +14,70 @@ O algoritmo utiliza operações matemáticas no **módulo 26** para deslocar let
 
 ### Encriptação
 Para cada letra:
-1. Converter a letra para um valor numérico:  
+1. Converter a letra em um valor numérico com `ord`:  
    \( A=0, B=1, ..., Z=25 \).
 2. Adicionar a chave (\(k\)) e calcular o resultado no módulo 26:  
    \( y = (x + k) \mod 26 \).
-3. Converter o valor resultante de volta para uma letra.
+3. Converter o valor numérico de volta para uma letra usando `chr`.
 
 ### Decriptação
 Para cada letra:
-1. Converter a letra criptografada para um valor numérico.
+1. Converter a letra criptografada em um valor numérico com `ord`.
 2. Subtrair a chave (\(k\)) e calcular o resultado no módulo 26:  
    \( x = (y - k) \mod 26 \).
-3. Converter o valor resultante de volta para uma letra.
+3. Converter o valor numérico de volta para uma letra com `chr`.
 
 ### Tratamento de caracteres especiais
-Os caracteres não alfabéticos (como números, espaços, e pontuações) são mantidos inalterados durante o processo.
+Os caracteres não alfabéticos (números, pontuações, espaços, etc.) são mantidos inalterados. Isso é verificado usando a função `isalpha`.
 
 ---
 
-## Estrutura do Código
+## Explicação Detalhada das Funções
 
-### Funções
-1. **`encrypt_letter(letter, k)`**  
-   Encripta uma única letra usando a chave \(k\).
+### **`isalpha`**
+A função `isalpha` verifica se um caractere é uma letra do alfabeto. É usada para:
+- Identificar se o caractere deve ser encriptado/descriptado.
+- Garantir que caracteres especiais, números e espaços sejam mantidos inalterados.
 
-2. **`decrypt_letter(letter, k)`**  
-   Descripta uma única letra usando a chave \(k\).
+Exemplo:
+```python
+letter = 'H'
+print(letter.isalpha())  # Saída: True
 
-3. **`encrypt_text(text, k)`**  
-   Encripta um texto completo, aplicando a encriptação em cada letra alfabética.
+non_letter = '!'
+print(non_letter.isalpha())  # Saída: False
+```
 
-4. **`decrypt_text(text, k)`**  
-   Descripta um texto completo, aplicando a decriptação em cada letra alfabética.
+No código:
+- Se `isalpha` retornar `True`, o caractere é processado.
+- Caso contrário, o caractere é simplesmente adicionado ao texto final sem alterações.
+
+### **`ord`**
+A função `ord` converte um caractere em seu valor numérico Unicode. Para este algoritmo:
+- Subtraímos o valor Unicode de `'A'` (\(65\)) de uma letra maiúscula para normalizar os valores, de forma que \(A=0, B=1, ..., Z=25\).
+- Isso permite realizar as operações matemáticas de criptografia e decriptografia.
+
+Exemplo:
+```python
+letter = 'H'
+x = ord(letter) - ord('A')  # H -> 72 - 65 = 7
+print(x)  # Saída: 7
+```
+
+No código:
+- `ord` é usado para transformar letras em números para que possamos aplicar operações no módulo 26.
+
+### **`chr`**
+A função `chr` faz o inverso de `ord`: converte um valor numérico de volta em um caractere Unicode.  
+No algoritmo:
+- Após realizar os cálculos matemáticos no módulo 26, `chr` é usado para reconstruir a letra correspondente.
+
+Exemplo:
+```python
+x = 7
+letter = chr(x + ord('A'))  # 7 -> 7 + 65 = 72 -> H
+print(letter)  # Saída: H
+```
 
 ---
 
@@ -79,4 +115,5 @@ Texto decriptado: Hello, World!
 ---
 
 ## Observações
-Este algoritmo **não é seguro** para uso em sistemas modernos, pois pode ser facilmente quebrado com análise de frequência. É apenas um exemplo didático.
+- **`isalpha`** garante que apenas letras sejam processadas. Caracteres especiais e espaços permanecem inalterados.
+- **`ord`** e **`chr`** são fundamentais para transformar letras em números e vice-versa, permitindo operações matemáticas simples.
