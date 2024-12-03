@@ -40,11 +40,34 @@ def decrypt_text(text, k):
 original_text = "Hello, World!"  # Texto original
 k = 3  # Chave de deslocamento
 
-# Encriptação
-encrypted_text = encrypt_text(original_text, k)
-print("Texto original:", original_text)
-print("Texto encriptado:", encrypted_text)
 
-# Decriptação
-decrypted_text = decrypt_text(encrypted_text, k)
-print("Texto decriptado:", decrypted_text)
+while True:
+    try:
+        input("digite enter para continuar")
+        print("\033[H\033[J")
+        x = int(input("Digite 1 para encriptar e 2 para decriptar"))
+        match x:
+            case 1:            
+                k = int(input("Digite a chave de deslocamento: "))
+                original_text = input("Digite o texto a ser encriptado: ")
+                encrypted_text = encrypt_text(original_text, k)
+                print("Texto original:", original_text)
+                print("Texto encriptado:", encrypted_text)
+            case 2:
+                k = int(input("Digite a chave de deslocamento: "))
+                encrypted_text = input("Digite o texto a ser decriptado: ")
+                decrypted_text = decrypt_text(encrypted_text, k)
+                print("Texto decriptado:", decrypted_text)
+                
+
+    except ValueError:
+        print("Digite um número inteiro.")
+
+# # Encriptação
+# encrypted_text = encrypt_text(original_text, k)
+# print("Texto original:", original_text)
+# print("Texto encriptado:", encrypted_text)
+
+# # Decriptação
+# decrypted_text = decrypt_text(encrypted_text, k)
+# print("Texto decriptado:", decrypted_text)
